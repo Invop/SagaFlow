@@ -10,7 +10,7 @@ public interface ISagaContext<out TState>
     /// <summary>
     ///     Gets the correlation identifier of the saga instance.
     /// </summary>
-    string CorrelationId { get; }
+    Guid CorrelationId { get; }
 
     /// <summary>
     ///     Gets the current state of the saga (read-only).

@@ -22,7 +22,7 @@ public interface ISagaMessageContext<out TMessage> where TMessage : ISagaMessage
     ///     This ID enables message routing to the correct saga and maintains process continuity.
     /// </summary>
     /// <value>A unique string identifier for saga correlation</value>
-    string CorrelationId { get; }
+    Guid CorrelationId { get; }
 
     /// <summary>
     ///     Gets the unique identifier for this specific message instance.

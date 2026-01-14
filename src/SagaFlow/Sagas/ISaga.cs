@@ -11,7 +11,7 @@ public interface ISaga
     ///     for the instance. While the setter is not typically called, it is there
     ///     to support persistence consistently across implementations.
     /// </summary>
-    string CorrelationId { get; set; }
+    Guid CorrelationId { get; set; }
 }
 
 /// <summary>

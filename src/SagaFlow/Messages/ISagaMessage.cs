@@ -14,7 +14,7 @@ public interface ISagaMessage
     /// <summary>
     ///     Gets the correlation identifier that links all messages belonging to the same saga instance.
     /// </summary>
-    string CorrelationId { get; }
+    Guid CorrelationId { get; }
 
     /// <summary>
     ///     Gets the timestamp when the message was created.
