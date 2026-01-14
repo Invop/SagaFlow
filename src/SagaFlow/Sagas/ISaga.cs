@@ -30,8 +30,8 @@ public interface ISaga
 ///     </para>
 ///     <para>
 ///         Important: This interface should ONLY be used in saga orchestrator services.
-///         Participant services (microservices that react to saga commands/events) should use
-///         <see cref="Messages.ISagaMessageHandler{TSagaMessage}" /> without any saga state access,
+///         Participant services (microservices that react to saga commands) should use
+///         <see cref="Messages.ISagaCommandHandler{TSagaMessage}" /> without any saga state access,
 ///         as they are stateless from the saga's perspective.
 ///     </para>
 /// </remarks>
