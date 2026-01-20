@@ -1,16 +1,17 @@
 <Solution>
     <Folder Name="/Solution Items/">
-        <File Path="Directory.Build.props"/>
-        <File Path="Directory.Build.targets"/>
-        <File Path="Directory.Packages.props"/>
-        <File Path="global.json"/>
-        <File Path="nuget.config"/>
+        <File Path="Directory.Build.props" />
+        <File Path="Directory.Build.targets" />
+        <File Path="Directory.Packages.props" />
+        <File Path="global.json" />
+        <File Path="nuget.config" />
     </Folder>
     <Folder Name="/src/">
-        <Project Path="src/SagaFlow.Analyzer/SagaFlow.Analyzer.csproj"/>
-        <Project Path="src/SagaFlow/SagaFlow.csproj"/>
+        <Project Path="src/SagaFlow.Analyzer/SagaFlow.Analyzer.csproj" />
+        <Project Path="src/SagaFlow/SagaFlow.csproj" />
     </Folder>
     <Folder Name="/tests/">
-        <Project Path="tests/SagaFlow.Analyzer.Tests/SagaFlow.Analyzer.Tests.csproj"/>
+        <Project Path="tests/SagaFlow.Analyzer.Tests/SagaFlow.Analyzer.Tests.csproj" />
+        <Project Path="tests/SagaFlow.Unit.Tests/SagaFlow.Unit.Tests.csproj" Id="415ab885-607f-4c28-91a7-da6cb30a6d5e" />
     </Folder>
 </Solution>
