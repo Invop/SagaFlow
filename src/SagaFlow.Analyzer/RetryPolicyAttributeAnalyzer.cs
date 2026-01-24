@@ -7,7 +7,9 @@ namespace SagaFlow.Analyzer;
 
 /// <summary>
 ///     Analyzer that validates the correct usage of RetryPolicyAttribute.
-///     Ensures that exception types in RetryOnExceptions and NonRetryableExceptions inherit from System.Exception.
+///     Ensures that:
+///     1. Exception types in RetryOnExceptions and NonRetryableExceptions inherit from System.Exception.
+///     2. The attribute is only applied to classes implementing ISagaCommandHandler or ISagaEventHandler.
 /// </summary>
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class RetryPolicyAttributeAnalyzer : DiagnosticAnalyzer
@@ -15,30 +17,37 @@ public class RetryPolicyAttributeAnalyzer : DiagnosticAnalyzer
     /// <summary>
     ///     Diagnostic ID for RetryOnExceptions validation rule.
     /// </summary>
-    public const string RetryOnExceptionsRuleDiagnosticId = "CHSG0003";
+    public const string RetryOnExceptionsRuleDiagnosticId = "CHSG0001";
 
     /// <summary>
     ///     Diagnostic ID for NonRetryableExceptions validation rule.
     /// </summary>
-    public const string NonRetryableExceptionsRuleDiagnosticId = "CHSG0004";
+    public const string NonRetryableExceptionsRuleDiagnosticId = "CHSG0002";
+
+    /// <summary>
+    ///     Diagnostic ID for handler implementation validation rule.
+    /// </summary>
+    public const string HandlerRequiredRuleDiagnosticId = "CHSG0003";
 
     private const string RetryPolicyAttributeName = "RetryPolicyAttribute";
     private const string RetryOnExceptionsPropertyName = "RetryOnExceptions";
     private const string NonRetryableExceptionsPropertyName = "NonRetryableExceptions";
+    private const string SagaCommandHandlerInterfaceName = "ISagaCommandHandler";
+    private const string SagaEventHandlerInterfaceName = "ISagaEventHandler";
 
-    // CHSG0003: RetryOnExceptions types must inherit from Exception
+    // CHSG0001: RetryOnExceptions types must inherit from Exception
     private static readonly LocalizableString RetryOnExceptionsRuleTitle = new LocalizableResourceString(
-        nameof(Resources.CHSG0003Title),
+        nameof(Resources.CHSG0001Title),
         Resources.ResourceManager,
         typeof(Resources));
 
     private static readonly LocalizableString RetryOnExceptionsRuleMessageFormat = new LocalizableResourceString(
-        nameof(Resources.CHSG0003MessageFormat),
+        nameof(Resources.CHSG0001MessageFormat),
         Resources.ResourceManager,
         typeof(Resources));
 
     private static readonly LocalizableString RetryOnExceptionsRuleDescription = new LocalizableResourceString(
-        nameof(Resources.CHSG0003Description),
+        nameof(Resources.CHSG0001Description),
         Resources.ResourceManager,
         typeof(Resources));
 
@@ -51,19 +60,19 @@ public class RetryPolicyAttributeAnalyzer : DiagnosticAnalyzer
         true,
         RetryOnExceptionsRuleDescription);
 
-    // CHSG0004: NonRetryableExceptions types must inherit from Exception
+    // CHSG0002: NonRetryableExceptions types must inherit from Exception
     private static readonly LocalizableString NonRetryableExceptionsRuleTitle = new LocalizableResourceString(
-        nameof(Resources.CHSG0004Title),
+        nameof(Resources.CHSG0002Title),
         Resources.ResourceManager,
         typeof(Resources));
 
     private static readonly LocalizableString NonRetryableExceptionsRuleMessageFormat = new LocalizableResourceString(
-        nameof(Resources.CHSG0004MessageFormat),
+        nameof(Resources.CHSG0002MessageFormat),
         Resources.ResourceManager,
         typeof(Resources));
 
     private static readonly LocalizableString NonRetryableExceptionsRuleDescription = new LocalizableResourceString(
-        nameof(Resources.CHSG0004Description),
+        nameof(Resources.CHSG0002Description),
         Resources.ResourceManager,
         typeof(Resources));
 
@@ -76,11 +85,36 @@ public class RetryPolicyAttributeAnalyzer : DiagnosticAnalyzer
         true,
         NonRetryableExceptionsRuleDescription);
 
+    // CHSG0003: RetryPolicyAttribute requires handler implementation
+    private static readonly LocalizableString HandlerRequiredRuleTitle = new LocalizableResourceString(
+        nameof(Resources.CHSG0003Title),
+        Resources.ResourceManager,
+        typeof(Resources));
+
+    private static readonly LocalizableString HandlerRequiredRuleMessageFormat = new LocalizableResourceString(
+        nameof(Resources.CHSG0003MessageFormat),
+        Resources.ResourceManager,
+        typeof(Resources));
+
+    private static readonly LocalizableString HandlerRequiredRuleDescription = new LocalizableResourceString(
+        nameof(Resources.CHSG0003Description),
+        Resources.ResourceManager,
+        typeof(Resources));
+
+    private static readonly DiagnosticDescriptor HandlerRequiredRule = new(
+        HandlerRequiredRuleDiagnosticId,
+        HandlerRequiredRuleTitle,
+        HandlerRequiredRuleMessageFormat,
+        "Usage",
+        DiagnosticSeverity.Error,
+        true,
+        HandlerRequiredRuleDescription);
+
     /// <summary>
     ///     Gets the supported diagnostic descriptors for this analyzer.
     /// </summary>
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } =
-        ImmutableArray.Create(RetryOnExceptionsRule, NonRetryableExceptionsRule);
+        ImmutableArray.Create(RetryOnExceptionsRule, NonRetryableExceptionsRule, HandlerRequiredRule);
 
     /// <summary>
     ///     Initializes the analyzer by registering analysis actions.
@@ -123,6 +157,9 @@ public class RetryPolicyAttributeAnalyzer : DiagnosticAnalyzer
                 continue;
             }
 
+            // Validate that the class implements ISagaCommandHandler<> or ISagaEventHandler<,>.
+            ValidateHandlerImplementation(context, namedTypeSymbol, attribute);
+
             // Validate RetryOnExceptions property.
             ValidateExceptionTypesProperty(
                 context,
@@ -137,6 +174,53 @@ public class RetryPolicyAttributeAnalyzer : DiagnosticAnalyzer
                 NonRetryableExceptionsPropertyName,
                 NonRetryableExceptionsRule);
         }
+    }
+
+    /// <summary>
+    ///     Validates that the class implements ISagaCommandHandler or ISagaEventHandler.
+    /// </summary>
+    /// <param name="context">Symbol analysis context.</param>
+    /// <param name="namedTypeSymbol">The class being analyzed.</param>
+    /// <param name="attribute">The RetryPolicyAttribute being validated.</param>
+    private static void ValidateHandlerImplementation(
+        SymbolAnalysisContext context,
+        INamedTypeSymbol namedTypeSymbol,
+        AttributeData attribute)
+    {
+        if (ImplementsHandlerInterface(namedTypeSymbol))
+        {
+            return;
+        }
+
+        Location location = attribute.ApplicationSyntaxReference?.GetSyntax().GetLocation()
+                            ?? namedTypeSymbol.Locations[0];
+
+        var diagnostic = Diagnostic.Create(
+            HandlerRequiredRule,
+            location,
+            namedTypeSymbol.Name);
+
+        context.ReportDiagnostic(diagnostic);
+    }
+
+    /// <summary>
+    ///     Checks if the type implements ISagaCommandHandler or ISagaEventHandler interfaces.
+    /// </summary>
+    /// <param name="typeSymbol">The type to check.</param>
+    /// <returns>True if the type implements a handler interface, false otherwise.</returns>
+    private static bool ImplementsHandlerInterface(INamedTypeSymbol typeSymbol)
+    {
+        foreach (INamedTypeSymbol interfaceSymbol in typeSymbol.AllInterfaces)
+        {
+            string interfaceName = interfaceSymbol.Name;
+            if (interfaceName == SagaCommandHandlerInterfaceName ||
+                interfaceName == SagaEventHandlerInterfaceName)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>

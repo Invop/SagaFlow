@@ -14,7 +14,6 @@
 ///     <code>
 /// public record ProcessPaymentCommand : ISagaCommand
 /// {
-///     [CorrelationId]
 ///     public Guid OrderId { get; init; }
 ///     
 ///     [IdempotencyKey(Order = 1)]
@@ -23,7 +22,6 @@
 ///     [IdempotencyKey(Order = 2)]
 ///     public string TransactionType { get; init; }
 ///     
-///     // ... other properties
 /// }
 /// </code>
 /// </example>

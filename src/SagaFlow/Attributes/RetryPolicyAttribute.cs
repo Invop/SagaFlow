@@ -1,8 +1,26 @@
 namespace SagaFlow.Attributes;
-
 /// <summary>
-///     Configures retry policy for message handling (HandleAsync).
+/// Configures retry policy for saga command/event handlers.
+/// Apply to handler classes, not to command/event DTOs.
 /// </summary>
+/// <remarks>
+/// <para>
+/// This attribute controls retry behavior for transient failures
+/// during handler execution (database timeouts, network issues, etc.).
+/// </para>
+/// <para>
+/// For orchestrator-level timeout and resend behavior, use.....
+/// </para>
+/// </remarks>
+/// <example>
+/// <code>
+/// [RetryPolicy(MaxRetries = 3, Strategy = BackoffStrategy.Exponential)]
+/// public class ReserveCreditHandler : ISagaCommandHandler&lt;ReserveCreditCommand&gt;
+/// {
+///     // Handler implementation
+/// }
+/// </code>
+/// </example>
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class RetryPolicyAttribute : Attribute
 {

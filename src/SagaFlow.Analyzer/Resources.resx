@@ -1,87 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <root>
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
-                id="root"
-                xmlns="">
-        <xsd:element name="root" msdata:IsDataSet="true">
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
 
-        </xsd:element>
-    </xsd:schema>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>1.3</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
-    </resheader>
-    <data name="CHSG0001Description" xml:space="preserve">
-        <value>The message type specified in SagaStepAttribute must implement ISagaMessage interface.</value>
-        <comment>An optional longer localizable description of the diagnostic.</comment>
-    </data>
-    <data name="CHSG0001MessageFormat" xml:space="preserve">
-        <value>Type '{0}' does not implement ISagaMessage interface</value>
-        <comment>The format-able message the diagnostic displays.</comment>
-    </data>
-    <data name="CHSG0001Title" xml:space="preserve">
-        <value>SagaStep message type must implement ISagaMessage</value>
-        <comment>The title of the diagnostic.</comment>
-    </data>
-    <data name="CHSG0002Description" xml:space="preserve">
-        <value>SagaStepAttribute can only be applied to classes that implement ISaga interface.</value>
-        <comment>An optional longer localizable description of the diagnostic.</comment>
-    </data>
-    <data name="CHSG0002MessageFormat" xml:space="preserve">
-        <value>Class '{0}' with SagaStepAttribute must implement ISaga interface</value>
-        <comment>The format-able message the diagnostic displays.</comment>
-    </data>
-    <data name="CHSG0002Title" xml:space="preserve">
-        <value>SagaStepAttribute requires ISaga implementation</value>
-        <comment>The title of the diagnostic.</comment>
-    </data>
-    <data name="CHSG0003Description" xml:space="preserve">
-        <value>The exception types specified in RetryOnExceptions property must inherit from System.Exception.</value>
-        <comment>An optional longer localizable description of the diagnostic.</comment>
-    </data>
-    <data name="CHSG0003MessageFormat" xml:space="preserve">
-        <value>Type '{0}' in RetryOnExceptions does not inherit from System.Exception</value>
-        <comment>The format-able message the diagnostic displays.</comment>
-    </data>
-    <data name="CHSG0003Title" xml:space="preserve">
-        <value>RetryOnExceptions must contain only Exception types</value>
-        <comment>The title of the diagnostic.</comment>
-    </data>
-    <data name="CHSG0004Description" xml:space="preserve">
-        <value>The exception types specified in NonRetryableExceptions property must inherit from System.Exception.</value>
-        <comment>An optional longer localizable description of the diagnostic.</comment>
-    </data>
-    <data name="CHSG0004MessageFormat" xml:space="preserve">
-        <value>Type '{0}' in NonRetryableExceptions does not inherit from System.Exception</value>
-        <comment>The format-able message the diagnostic displays.</comment>
-    </data>
-    <data name="CHSG0004Title" xml:space="preserve">
-        <value>NonRetryableExceptions must contain only Exception types</value>
-        <comment>The title of the diagnostic.</comment>
-    </data>
-    <data name="CHSG0005Description" xml:space="preserve">
-        <value>In the Saga pattern, a pivot point represents the point of no return. A saga can have at most one pivot point. After the pivot point executes, compensating transactions are no longer relevant.</value>
-        <comment>An optional longer localizable description of the diagnostic.</comment>
-    </data>
-    <data name="CHSG0005MessageFormat" xml:space="preserve">
-        <value>Class '{0}' has {1} pivot points but can have at most one</value>
-        <comment>The format-able message the diagnostic displays.</comment>
-    </data>
-    <data name="CHSG0005Title" xml:space="preserve">
-        <value>Saga can have at most one pivot point</value>
-        <comment>The title of the diagnostic.</comment>
-    </data>
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CHSG0001Description" xml:space="preserve">
+    <value>The exception types specified in RetryOnExceptions property must inherit from System.Exception.</value>
+    <comment>An optional longer localizable description of the diagnostic.</comment>
+  </data>
+  <data name="CHSG0001MessageFormat" xml:space="preserve">
+    <value>Type '{0}' in RetryOnExceptions does not inherit from System.Exception</value>
+    <comment>The format-able message the diagnostic displays.</comment>
+  </data>
+  <data name="CHSG0001Title" xml:space="preserve">
+    <value>RetryOnExceptions must contain only Exception types</value>
+    <comment>The title of the diagnostic.</comment>
+  </data>
+  <data name="CHSG0002Description" xml:space="preserve">
+    <value>The exception types specified in NonRetryableExceptions property must inherit from System.Exception.</value>
+    <comment>An optional longer localizable description of the diagnostic.</comment>
+  </data>
+  <data name="CHSG0002MessageFormat" xml:space="preserve">
+    <value>Type '{0}' in NonRetryableExceptions does not inherit from System.Exception</value>
+    <comment>The format-able message the diagnostic displays.</comment>
+  </data>
+  <data name="CHSG0002Title" xml:space="preserve">
+    <value>NonRetryableExceptions must contain only Exception types</value>
+    <comment>The title of the diagnostic.</comment>
+  </data>
+  <data name="CHSG0006Description" xml:space="preserve">
+    <value>The RetryPolicyAttribute should only be applied to classes that implement ISagaCommandHandler&lt;T&gt; or ISagaEventHandler&lt;TEvent, TState&gt;. Retry logic is designed for message handlers, not for commands or other DTOs.</value>
+    <comment>An optional longer localizable description of the diagnostic.</comment>
+  </data>
+  <data name="CHSG0006MessageFormat" xml:space="preserve">
+    <value>Class '{0}' has RetryPolicyAttribute but does not implement ISagaCommandHandler or ISagaEventHandler</value>
+    <comment>The format-able message the diagnostic displays.</comment>
+  </data>
+  <data name="CHSG0006Title" xml:space="preserve">
+    <value>RetryPolicyAttribute requires handler implementation</value>
+    <comment>The title of the diagnostic.</comment>
+  </data>
 </root>
