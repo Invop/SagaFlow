@@ -1,0 +1,8 @@
+🔴 P0	Saga Definition DSL		
+🔴 P0	Saga State Machine		
+🔴 P0	Saga Instance Repository		
+🔴 P0	Compensation Logic		
+🟡 P1	Orchestrator Implementation		
+🟡 P1	Saga Recovery Service		
+🟡 P1	Semantic Locking		
+🟢 P2	Idempotency Store
