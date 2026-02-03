@@ -1,4 +1,6 @@
-﻿namespace SagaFlow.Messages;
+﻿using SagaFlow.Attributes;
+
+namespace SagaFlow.Messages;
 
 /// <summary>
 ///     Base interface for all saga messages.
@@ -7,8 +9,16 @@
 public interface ISagaMessage
 {
     /// <summary>
-    ///     Gets the idempotency key to ensure the command is processed only once.
+    /// Gets the idempotency key associated with the request.
     /// </summary>
+    /// <remarks>
+    /// This key is used to ensure that the message is processed only once. 
+    /// <para>
+    /// The value is automatically calculated based on properties marked with 
+    /// <see cref="IdempotencyKeyAttribute"/>. If no properties are marked, a random 
+    /// unique key is generated to ensure safe processing.
+    /// </para>
+    /// </remarks>
     string IdempotencyKey { get; }
 
     /// <summary>

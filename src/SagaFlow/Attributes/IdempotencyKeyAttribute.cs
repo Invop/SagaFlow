@@ -35,12 +35,6 @@ public sealed class IdempotencyKeyAttribute : Attribute
     public int Order { get; set; }
 
     /// <summary>
-    ///     Gets or sets a value indicating whether to include the property name in the key.
-    ///     Default is <c>false</c>.
-    /// </summary>
-    public bool IncludePropertyName { get; set; }
-
-    /// <summary>
     ///     Gets or sets the format string to use when converting the property value to string.
     ///     If not specified, <see cref="object.ToString" /> will be used.
     /// </summary>

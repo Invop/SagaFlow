@@ -5,7 +5,7 @@ namespace SagaFlow.Unit.Tests;
 /// <summary>
 /// Test command implementation for unit tests.
 /// </summary>
-public sealed record TestCommand : ISagaCommand
+public sealed record TestCommand : ISagaMessage
 {
     public required string IdempotencyKey { get; init; }
     public required Guid CorrelationId { get; init; }
@@ -17,7 +17,7 @@ public sealed record TestCommand : ISagaCommand
 /// <summary>
 /// Test event implementation for unit tests.
 /// </summary>
-public sealed record TestEvent : ISagaEvent
+public sealed record TestEvent : ISagaMessage
 {
     public required string IdempotencyKey { get; init; }
     public required Guid CorrelationId { get; init; }
