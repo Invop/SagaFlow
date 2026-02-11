@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SagaFlow.Messages;
 using SagaFlow.Outbox;
+using SagaFlow.Registration;
+using SagaFlow.SagaDefinition;
 using SagaFlow.Utils;
 
 namespace SagaFlow.Configuration;
@@ -23,6 +25,7 @@ public static class ServiceCollectionExtensions
     ///         <item><description><see cref="ISagaMessagePublisher"/> - For publishing messages to the outbox</description></item>
     ///         <item><description><see cref="IOutboxProcessor"/> - For processing outbox messages</description></item>
     ///         <item><description><see cref="ISerializer"/> - Default JSON serializer (can be overridden)</description></item>
+    ///         <item><description><see cref="ISagaRegistry"/> - Registry for saga descriptors</description></item>
     ///         <item><description>Background services for outbox processing and cleanup</description></item>
     ///     </list>
     ///     </para>
@@ -35,6 +38,11 @@ public static class ServiceCollectionExtensions
     ///     <code>
     ///     services.AddSagaFlow(builder =>
     ///     {
+    ///         // Register sagas
+    ///         builder.AddSagaStateMachine&lt;OrderSaga, OrderSagaState&gt;()
+    ///             .InMemoryRepository();
+    ///         
+    ///         // Configure outbox
     ///         builder.ConfigureOutbox(options =>
     ///         {
     ///             options.BatchSize = 50;
@@ -55,6 +63,14 @@ public static class ServiceCollectionExtensions
         // Register core services
         services.TryAddSingleton(TimeProvider.System);
         services.TryAddSingleton<ISerializer, JsonSerializer>();
+
+        // Register saga registry
+        services.TryAddSingleton<SagaRegistry>();
+        services.TryAddSingleton<ISagaRegistry>(sp => sp.GetRequiredService<SagaRegistry>());
+
+        // Register orchestration pipeline services
+        services.TryAddScoped<ISagaRunner, SagaRunner>();
+        services.TryAddScoped<ISagaMessageProcessor, SagaMessageProcessor>();
 
         // Register outbox processing services
         services.TryAddScoped<IOutboxProcessor, OutboxProcessor>();

@@ -51,23 +51,13 @@ internal sealed class SagaMessagePublisher : ISagaMessagePublisher
     }
 
     /// <inheritdoc />
-    public Task PublishCommandAsync<TCommand>(
-        TCommand command,
+    public Task PublishAsync<TMessage>(
+        TMessage message,
         CancellationToken cancellationToken = default)
-        where TCommand : ISagaCommand
+        where TMessage : ISagaMessage
     {
-        ArgumentNullException.ThrowIfNull(command);
-        return PublishMessageInternalAsync(command, cancellationToken);
-    }
-
-    /// <inheritdoc />
-    public Task PublishEventAsync<TEvent>(
-        TEvent @event,
-        CancellationToken cancellationToken = default)
-        where TEvent : ISagaEvent
-    {
-        ArgumentNullException.ThrowIfNull(@event);
-        return PublishMessageInternalAsync(@event, cancellationToken);
+        ArgumentNullException.ThrowIfNull(message);
+        return PublishMessageInternalAsync(message, cancellationToken);
     }
 
     /// <summary>
